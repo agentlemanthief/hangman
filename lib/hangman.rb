@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'hangman_display'
 
 # Class to contain computer methods and variables
@@ -5,7 +7,7 @@ class Computer
   include HangmanDisplay
   attr_reader :word, :lives, :word_guessed, :word_dashes, :incorrect_guesses
 
-  def initialize(word = choose_word, incorrect_guesses = [], word_dashes = '_' *   word.length, lives = 6, word_guessed = false)
+  def initialize(word = choose_word, incorrect_guesses = [], word_dashes = '_' * word.length, lives = 6, word_guessed = false)
     @word = word
     @incorrect_guesses = incorrect_guesses
     @word_dashes = word_dashes
@@ -14,13 +16,19 @@ class Computer
   end
 
   def choose_word
-    contents = File.open('../5desk.txt', 'r') { |file| file.read }
+    contents = File.open('../5desk.txt', 'r', &:read)
     contents_arr = contents.split(/\r\n/)
     contents_arr.delete_if { |word| word.length < 5 || word.length > 12 }
     contents_arr[rand(contents_arr.length)].downcase
   end
 
   def display(lives)
+    hangman_diagram(lives)
+    puts "    #{@word_dashes}"
+    puts "\n    Incorrect guesses: #{@incorrect_guesses}\n\n"
+  end
+
+  def hangman_diagram(lives)
     case lives
     when 6
       puts HangmanDisplay::HANGMAN_ZERO
@@ -37,8 +45,6 @@ class Computer
     when 0
       puts HangmanDisplay::HANGMAN_SIX
     end
-    puts "    #{@word_dashes}"
-    puts "\n    Incorrect guesses: #{@incorrect_guesses}\n\n"
   end
 
   def check_guess(guess)

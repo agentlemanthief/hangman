@@ -1,5 +1,6 @@
+# Frozen_string_literal: true
+
 # Module containing display elements for the hangman game
-# frozen_string_literal: true
 
 module HangmanDisplay
   INTRO = <<~'INTRO'

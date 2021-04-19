@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# Frozen_string_literal: true
 
 require_relative 'hangman_display'
 
@@ -24,7 +24,7 @@ class Computer
 
   def display(lives)
     hangman_diagram(lives)
-    puts "    #{@word_dashes}"
+    puts "    #{@word_dashes.split('').join(' ')}"
     puts "\n    Incorrect guesses: #{@incorrect_guesses}\n\n"
   end
 
